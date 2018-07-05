@@ -98,9 +98,10 @@ def gene_code(n):
         image = image.resize([int(image.size[0] * (1 + 0.4 * (random.random()-0.5))), int(image.size[1]* (1 + 0.4 * (random.random()-0.5)))],Image.LANCZOS)
         image = image.filter(ImageFilter.GaussianBlur(radius=0.5))
         image = image.resize([160, 60], Image.LANCZOS)
+        image = image.convert('RGB')
         f.write(label)
-        image.save(address + str(i) +'.jpg', 'jpeg')
-        if i % 1000 == 0 or i == 1 and i != 0:
+        image.save(address + str(i) +'.jpg', 'JPEG')
+        if (i % 1000 == 0 or i == 1) and i != 0:
             print('Image:' + str(i))
         f.close()
 

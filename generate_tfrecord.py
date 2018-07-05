@@ -1,4 +1,3 @@
-
 from random import shuffle
 import numpy as np
 import glob
@@ -7,7 +6,6 @@ import cv2
 import sys
 import os
 import PIL.Image as Image
-
 
 def encode_utf8_string(text, length, dic, null_char_id=50):
     char_ids_padded = [null_char_id]*length
@@ -40,7 +38,8 @@ addrs_label = glob.glob(label_path)
 print(len(addrs_image))
 print(len(addrs_label))
 
-tfrecord_writer  = tf.python_io.TFRecordWriter("tfexample_train") 
+tfrecord_writer  = tf.python_io.TFRecordWriter("tfexample_train")
+
 for j in range(0,int(len(addrs_image))):
 
     print('Train data: {}/{}'.format(j,int(len(addrs_image))))
@@ -50,9 +49,11 @@ for j in range(0,int(len(addrs_image))):
 
     img = img.resize((160, 60), Image.ANTIALIAS)
     np_data = np.array(img)
+    image = tf.image.convert_image_dtype(np_data, dtype=tf.uint8)
+    image = tf.image.encode_png(image)
+    np_data = np.array(img)
     image_data = img.tobytes()
     for text in open(addrs_label[j], encoding="utf8"):
-
         char_ids_padded, char_ids_unpadded = encode_utf8_string(
                     text=text,
                     dic=dict,
@@ -61,23 +62,17 @@ for j in range(0,int(len(addrs_image))):
     #print(text, char_ids_padded, char_ids_unpadded)
     example = tf.train.Example(features=tf.train.Features(
         feature={
-            'image/encoded': _bytes_feature(image_data),
             'image/format': _bytes_feature(b"raw"),
-            'image/width': _int64_feature([np_data.shape[1]]),
-            'image/orig_width': _int64_feature([np_data.shape[1]]),
+            'image/encoded': _bytes_feature(image_data),
             'image/class': _int64_feature(char_ids_padded),
             'image/unpadded_class': _int64_feature(char_ids_unpadded),
+            'height': _int64_feature([np_data.shape[0]]),
+            'width': _int64_feature([np_data.shape[1]]),
+            'orig_width': _int64_feature([np_data.shape[1]]),
             'image/text': _bytes_feature(bytes(text, 'utf-8')),
-            # 'height': _int64_feature([crop_data.shape[0]]),
         }
     ))
     tfrecord_writer.write(example.SerializeToString())
+
 tfrecord_writer.close()
-
 sys.stdout.flush()
-
-
-
-
-
-
