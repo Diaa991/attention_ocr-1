@@ -13,7 +13,8 @@
 # limitations under the License.
 # ==============================================================================
 
-import fsns
-import fsns_test
+import datasets.newtextdataset
+import datasets.fsns
+import datasets.fsns_test
 
-__all__ = [fsns, fsns_test]
+__all__ = [fsns, fsns_test, newtextdataset]
