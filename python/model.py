@@ -565,9 +565,9 @@ class Model(object):
       all_assign_ops.append(assign_op)
       all_feed_dict.update(feed_dict)
 
-    logging.info('variables_to_restore:\n%s' % utils.variables_to_restore().keys())
-    logging.info('moving_average_variables:\n%s' % [v.op.name for v in tf.moving_average_variables()])
-    logging.info('trainable_variables:\n%s' % [v.op.name for v in tf.trainable_variables()])
+    #logging.info('variables_to_restore:\n%s' % utils.variables_to_restore().keys())
+    #logging.info('moving_average_variables:\n%s' % [v.op.name for v in tf.moving_average_variables()])
+    #logging.info('trainable_variables:\n%s' % [v.op.name for v in tf.trainable_variables()])
     if master_checkpoint:
       assign_from_checkpoint(utils.variables_to_restore(), master_checkpoint)
 

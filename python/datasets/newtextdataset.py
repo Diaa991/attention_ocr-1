@@ -44,7 +44,7 @@ DEFAULT_CONFIG = {
     'charset_filename': 'dic.txt',
     'image_shape': (60, 160, 3),
     'num_of_views': 1,
-    'max_sequence_length': 37,
+    'max_sequence_length': 9,
     'null_code': 50,
     'items_to_descriptions': {
         'image': 'A [60 x 160 x 1] gray image.',
@@ -84,7 +84,6 @@ def read_charset(filename, null_character=u'\u2591'):
         char = null_character
       charset[code] = char
   return charset
-
 
 class _NumOfViewsHandler(slim.tfexample_decoder.ItemHandler):
   """Convenience handler to determine number of views stored in an image."""

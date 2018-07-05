@@ -57,7 +57,7 @@ for j in range(0,int(len(addrs_image))):
         char_ids_padded, char_ids_unpadded = encode_utf8_string(
                     text=text,
                     dic=dict,
-                    length=11,
+                    length=9,
                     null_char_id=50)
     #print(text, char_ids_padded, char_ids_unpadded)
     example = tf.train.Example(features=tf.train.Features(

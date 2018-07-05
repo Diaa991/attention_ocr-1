@@ -70,6 +70,9 @@ flags.DEFINE_integer('total_num_replicas', 1,
 flags.DEFINE_integer('startup_delay_steps', 15,
                      'Number of training steps between replicas startup.')
 
+flags.DEFINE_integer('log_every_n_steps', 100,
+                     'Log step event steps.')
+
 flags.DEFINE_boolean('reset_train_dir', False,
                      'If true will delete all files in the train_log_dir')
 
@@ -150,7 +153,8 @@ def train(loss, init_fn, hparams):
       save_interval_secs=FLAGS.save_interval_secs,
       startup_delay_steps=startup_delay_steps,
       sync_optimizer=sync_optimizer,
-      init_fn=init_fn)
+      init_fn=init_fn,
+      log_every_n_steps=FLAGS.log_every_n_steps)
 
 
 def prepare_training_dir():
